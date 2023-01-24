@@ -6,7 +6,6 @@
 8 4 2 4
 1 7 -> такого числа в массиве нет*/
 Console.Clear();
-
 int GetDataFromUser(string msg, string value)
 {
     ColorizeText(msg, ConsoleColor.DarkBlue);
@@ -31,7 +30,7 @@ int[,] GetRandomMatrixAndPrint(int rows, int columns, int deviation)
     Console.Write("\t");
     for (int j = 0; j < columns; j++)
     {
-        ColorizeText($"#{j}" + "\t", ConsoleColor.DarkYellow);
+        ColorizeText($" #{j}" + "\t", ConsoleColor.DarkYellow);
     }
     Console.WriteLine();
     int[,] matrix = new int[rows,columns];
@@ -63,5 +62,5 @@ ColorizeText("<<<<< НУМЕРАЦИЯ СТРОК И СТОЛБЦОВ В МАТ�
 Console.WriteLine();
 int numberRow = GetDataFromUser("Номер строки: ", "строки");
 int numberColumn = GetDataFromUser("Номер столбца: ", "столбца");
-int[,] randomMatrix = GetRandomMatrixAndPrint(6, 4, 10);
+int[,] randomMatrix = GetRandomMatrixAndPrint(6, 4, 20);
 OutputOfElement(randomMatrix, numberRow, numberColumn);
