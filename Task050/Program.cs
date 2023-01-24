@@ -6,11 +6,19 @@
 8 4 2 4
 1 7 -> такого числа в массиве нет*/
 Console.Clear();
-int GetDataFromUser(string msg)
+
+int GetDataFromUser(string msg, string value)
 {
-    ColorizeText(msg,ConsoleColor.DarkBlue);
-    int variable = int.Parse(Console.ReadLine()!);
-    return variable;
+    ColorizeText(msg, ConsoleColor.DarkBlue);
+    int variable = -1;
+    if (int.TryParse(Console.ReadLine()!, out variable) && variable >= 0)
+        return variable;
+    else
+    {
+        ColorizeText("Введено недопустимое значение", ConsoleColor.DarkRed);
+        Console.WriteLine();
+        return variable = GetDataFromUser($"Введите повторно номер {value} (число должно быть целочисленным и не меньше нуля): ", value);
+    }
 }
 void ColorizeText(string msg, ConsoleColor Color)
 {
@@ -46,14 +54,14 @@ int[,] GetRandomMatrixAndPrint(int rows, int columns, int deviation)
 void OutputOfElement(int[,] matrix, int userRow, int userColumn)
 {
     if (userRow < matrix.GetLength(0) && userColumn < matrix.GetLength(1))
-        ColorizeText($"Элемент: matrix[{userRow},{userColumn}] = {matrix[userRow,userColumn]}", ConsoleColor.DarkGreen);
+        ColorizeText($"Элемент матрицы: matrix[{userRow},{userColumn}] = {matrix[userRow,userColumn]}", ConsoleColor.DarkGreen);
     else
-        ColorizeText($"Элемент: matrix[{userRow},{userColumn}] - такого элемента в матрице нет", ConsoleColor.DarkRed);
+        ColorizeText($"Элемент матрицы: matrix[{userRow},{userColumn}] - такого элемента в матрице нет", ConsoleColor.DarkRed);
     Console.WriteLine();
 }
 ColorizeText("<<<<< НУМЕРАЦИЯ СТРОК И СТОЛБЦОВ В МАТРИЦЕ НАЧИНАЕТСЯ С НУЛЕЙ!!! >>>>>", ConsoleColor.Magenta);
 Console.WriteLine();
-int numberRow = GetDataFromUser("Номер строки: ");
-int numberColumn = GetDataFromUser("Номер столбца: ");
+int numberRow = GetDataFromUser("Номер строки: ", "строки");
+int numberColumn = GetDataFromUser("Номер столбца: ", "столбца");
 int[,] randomMatrix = GetRandomMatrixAndPrint(6, 4, 10);
 OutputOfElement(randomMatrix, numberRow, numberColumn);
