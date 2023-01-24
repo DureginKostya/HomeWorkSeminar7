@@ -5,13 +5,20 @@ m = 3, n = 4.
 8 7,8 -7,1 9
 */
 Console.Clear();
-int GetDataFromUser(string msg)
+int GetDataFromUser(string msg, string value)
 {
-    PrintInColor(msg, ConsoleColor.White);
-    int number = int.Parse(Console.ReadLine()!); 
-    return number;
+    ColorizeText(msg, ConsoleColor.White);
+    int variable = 0;
+    if (int.TryParse(Console.ReadLine()!, out variable) && variable > 0)
+        return variable;
+    else
+    {
+        ColorizeText("Введено недопустимое значение", ConsoleColor.DarkRed);
+        Console.WriteLine();
+        return variable = GetDataFromUser($"Введите повторно количество {value} (число должно быть целочисленным и больше нуля): ", value);
+    }
 }
-void PrintInColor(string msg, ConsoleColor Color)
+void ColorizeText(string msg, ConsoleColor Color)
 {
     Console.ForegroundColor = Color;
     Console.Write(msg);
@@ -24,7 +31,7 @@ double[,] GetMatrixFromRandomNumbers(int rows, int columns, int deviation)
     {
         for (int j = 0; j < columns; j++)
         {
-            matrix[i,j] = new Random().Next(-deviation, deviation) + Math.Round(new Random().NextDouble(), 2);
+            matrix[i,j] = Math.Round(new Random().Next(-deviation, deviation) + new Random().NextDouble(), 2);
         }
     }
     return matrix;
@@ -34,20 +41,23 @@ void ShowMatrix(double[,] matrix)
     Console.Write("\t");
     for (int j = 0; j < matrix.GetLength(1); j++)
     {
-        PrintInColor(j + "\t", ConsoleColor.DarkCyan);
+        ColorizeText($"  #{j}" + "\t", ConsoleColor.DarkCyan);
     }
     Console.WriteLine();
     for (int i = 0; i < matrix.GetLength(0); i++)
     {
-        PrintInColor(i + "\t", ConsoleColor.DarkCyan);
+        ColorizeText($"#{i}" + "\t", ConsoleColor.DarkCyan);
         for (int j = 0; j < matrix.GetLength(1); j++)
         {
-            PrintInColor(matrix[i,j] + "\t", ConsoleColor.White);            
+            if (matrix[i,j] < 0)
+                ColorizeText($" {matrix[i,j]}" + "\t", ConsoleColor.White);    
+            else
+                ColorizeText($"  {matrix[i,j]}" + "\t", ConsoleColor.White); 
         }
         Console.WriteLine();
     }
 }
-int rowsLength = GetDataFromUser("Введите количество строк в матрице: ");
-int columnsLength = GetDataFromUser("Введите количество столбцов в матрице: ");
-double[,] randomMatrix = GetMatrixFromRandomNumbers(rowsLength, columnsLength, 15);
+int rowsLength = GetDataFromUser("Введите количество строк в матрице: ", "строк");
+int columnsLength = GetDataFromUser("Введите количество столбцов в матрице: ", "столбцов");
+double[,] randomMatrix = GetMatrixFromRandomNumbers(rowsLength, columnsLength, 20);
 ShowMatrix(randomMatrix);
