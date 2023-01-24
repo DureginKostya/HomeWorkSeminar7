@@ -6,11 +6,18 @@
 Среднее арифметическое каждого столбца: 4,6; 5,6; 3,6; 3.
 */
 Console.Clear();
-int GetDataFromUser(string msg)
+int GetDataFromUser(string msg, string value)
 {
-    ColorizeText(msg,ConsoleColor.DarkBlue);
-    int variable = int.Parse(Console.ReadLine()!);
-    return variable;
+    ColorizeText(msg, ConsoleColor.White);
+    int variable = 0;
+    if (int.TryParse(Console.ReadLine()!, out variable) && variable > 0)
+        return variable;
+    else
+    {
+        ColorizeText("Введено недопустимое значение", ConsoleColor.DarkRed);
+        Console.WriteLine();
+        return variable = GetDataFromUser($"Введите повторно количество {value} (число должно быть целочисленным и больше нуля): ", value);
+    }
 }
 void ColorizeText(string msg, ConsoleColor Color)
 {
@@ -23,7 +30,7 @@ int[,] GetRandomMatrixAndPrint(int rows, int columns, int deviation)
     Console.Write("\t");
     for (int j = 0; j < columns; j++)
     {
-        ColorizeText($"#{j}" + "\t", ConsoleColor.DarkYellow);
+        ColorizeText($" #{j}" + "\t", ConsoleColor.DarkYellow);
     }
     Console.WriteLine();
     int[,] matrix = new int[rows,columns];
@@ -76,8 +83,8 @@ void ShowResult(double[] array)
 }
 ColorizeText("Введите размерность матрицы", ConsoleColor.DarkBlue);
 Console.WriteLine();
-int numberRow = GetDataFromUser("Количество строк: ");
-int numberColumn = GetDataFromUser("Количество столбцов: ");
-int[,] randomMatrix = GetRandomMatrixAndPrint(numberRow, numberColumn, 10);
+int numberRow = GetDataFromUser("Количество строк: ", "строк");
+int numberColumn = GetDataFromUser("Количество столбцов: ", "столбцов");
+int[,] randomMatrix = GetRandomMatrixAndPrint(numberRow, numberColumn, 20);
 double[] arraySum = GetSumOfElementsOfColumn(randomMatrix);
 ShowResult(arraySum);
