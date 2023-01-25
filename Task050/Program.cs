@@ -58,9 +58,9 @@ void OutputOfElement(int[,] matrix, int userRow, int userColumn)
         ColorizeText($"Элемент матрицы: matrix[{userRow},{userColumn}] - такого элемента в матрице нет", ConsoleColor.DarkRed);
     Console.WriteLine();
 }
+int[,] randomMatrix = GetRandomMatrixAndPrint(6, 4, 20);
 ColorizeText("<<<<< НУМЕРАЦИЯ СТРОК И СТОЛБЦОВ В МАТРИЦЕ НАЧИНАЕТСЯ С НУЛЕЙ!!! >>>>>", ConsoleColor.Magenta);
 Console.WriteLine();
 int numberRow = GetDataFromUser("Номер строки: ", "строки");
 int numberColumn = GetDataFromUser("Номер столбца: ", "столбца");
-int[,] randomMatrix = GetRandomMatrixAndPrint(6, 4, 20);
 OutputOfElement(randomMatrix, numberRow, numberColumn);
